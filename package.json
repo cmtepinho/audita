@@ -1,0 +1,14 @@
+{
+  "name": "audita",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Audita B 2.0 — protótipo preservado e preparação incremental",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev-server.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check:reference": "node scripts/check-reference.mjs",
+    "check:privacy": "node scripts/check-privacy.mjs",
+    "prepare:public": "node scripts/prepare-public.mjs"
+  }
+}
