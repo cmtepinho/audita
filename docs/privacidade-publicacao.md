@@ -1,5 +1,10 @@
 # Código público, dados locais
 
+Publicação autorizada em 12/10/2026: [repositório](https://github.com/cmtepinho/audita)
+e [protótipo no Pages](https://cmtepinho.github.io/audita/). Foi usado o histórico
+novo da cópia pública; o histórico original permaneceu local. O workflow de
+publicação verificou lista de arquivos, autoria, referência e os seis testes.
+
 O GitHub deve receber apenas o código, documentação técnica revisada e dados
 fictícios do protótipo. Faturas, SMS, decisões, repasses reais, bancos de dados,
 imagens pessoais, backups e credenciais ficam exclusivamente no computador.
