@@ -36,20 +36,21 @@
 }
 /* Artes personalizadas continuam sem a rotação aplicada somente ao Aeternum. */
 </style>
+<link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
 <noscript>O Audita precisa de JavaScript para ler PDFs e proteger seus dados localmente.</noscript>
 <div class="workspace">
-<aside class="side">
-  <div class="logo"><span class="logo-symbol">◈</span> audita<span style="color:#1971e8">.</span></div>
-  <div class="pill-demo">● Protótipo navegável · B 2.0</div>
-  <h1>Suas faturas.<br>Sem surpresas.</h1>
-  <p>Explore a experiência Claro Premium. Clique nas telas ou execute uma auditoria simulada do início ao fim.</p>
-  <div class="nav-title">Explorar telas</div><nav class="desk-nav" id="desk-nav"></nav>
-  <button class="reset" onclick="resetDemo()">↻ Reiniciar demonstração</button>
-  <p class="desk-note">Dados 100% fictícios. PDFs e SMS selecionados nesta prévia não são processados nem enviados a servidores.</p>
+<aside class="side" aria-label="Menu principal">
+  <a class="logo" href="#" onclick="go('home');return false"><span class="logo-symbol">◈</span> audita<span style="color:#1971e8">.</span></a>
+  <div class="pill-demo">● Cofre neste dispositivo</div>
+  <div class="nav-title">Seu espaço</div><nav class="desk-nav" id="desk-nav" aria-label="Navegação principal"></nav>
+  <div class="sidebar-footer"><p class="desk-note">Seus dados ficam somente neste dispositivo.</p><button class="outline" onclick="Audita.lock()">Bloquear cofre</button></div>
 </aside>
-<div class="phone-shell"><div class="phone" id="app"><div class="status"><span>9:41</span><div class="island"></div><span class="signal">▥ ◕ ▰</span></div><main class="screen" id="screen"></main><div id="bottom"></div><div class="homebar"></div><div id="overlay"></div></div></div>
+<div class="app-shell" id="app">
+  <header class="app-bar"><a class="logo mobile-logo" href="#" onclick="go('home');return false"><span class="logo-symbol">◈</span> audita.</a><span class="app-bar-title">Auditoria de faturas</span><span class="badge blue">Privado · Local</span></header>
+  <main class="screen" id="screen" tabindex="-1" aria-label="Conteúdo da auditoria"></main><div id="bottom"></div><div id="overlay" aria-live="polite"></div>
+</div>
 </div>
 <input type="file" accept="image/*" id="card-image" hidden>
 <script>
@@ -61,7 +62,7 @@ const issues=[{id:1,name:'Spotify',detail:'Duas cobranças de mesmo valor e esta
 const categories=[['Compras e serviços',3230,'#297cdf'],['Supermercado',1580,'#efaa34'],['Alimentação',1280,'#41b68d'],['Transporte',750,'#9571e8'],['Assinaturas',520,'#9cc0ee'],['Outros',1090,'#cad5e4']];
 let state={screen:'home',month:'Outubro de 2026',selectedCard:'aeternum',files:[{name:'Bradesco Aeternum Outubro 2026.pdf',size:'2,1 MB · 8 páginas',demo:true},{name:'Cartão anterior Outubro 2026.pdf',size:'1,8 MB · 6 páginas',demo:true}],smsMethod:'shortcut',smsFile:false,smsText:'',reviewFilter:'all',statuses:{},transaction:1,reportTab:'Resumo',cardTab:'Todos',extraTab:'Pessoas',overviewTab:'Categoria',modal:'',toast:'',images:{},repay:[500,300],extraName:['Adicional 1','Adicional 2'],returnTo:'review',showExplanation:false,showAllTransactions:false};
 const nav=[['home','Início','home'],['start','Nova auditoria','calendar'],['invoices','Faturas','file'],['sms','Mensagens (SMS)','sms'],['processing','Processamento','spark'],['review','Revisão de ocorrências','alert'],['transaction','Detalhe da transação','search'],['wallet','Carteira de cartões','cards'],['additional','Gestão dos adicionais','users'],['report','Relatório mensal','report']];
-function go(s){state.screen=s;state.modal='';render();document.getElementById('screen').scrollTop=0}
+function go(s){state.screen=s;state.modal='';render();document.getElementById('screen').scrollTop=0;window.scrollTo(0,0);document.getElementById('screen').focus({preventScroll:true})}
 function toast(str){state.toast=str;renderToast();setTimeout(()=>{state.toast='';renderToast()},2500)}
 function renderToast(){document.getElementById('overlay').innerHTML=state.modal?modalContent():state.toast?`<div class="toast">${esc(state.toast)}</div>`:''}
 function setModal(name){state.modal=name;renderToast()}function closeModal(){state.modal='';renderToast()}
@@ -113,7 +114,7 @@ function downloadSummary(){let lines=['AUDITA - RELATORIO DEMONSTRATIVO','Outubr
 function addFiles(e){let added=[...e.target.files].filter(f=>f.name.toLowerCase().endsWith('.pdf')).map(f=>({name:f.name,size:(f.size/1024/1024).toFixed(1).replace('.',',')+' MB · Não analisado',demo:false}));state.files.push(...added);render();toast(added.length?'Arquivos selecionados; leitura simulada.':'Nenhum PDF selecionado.')}
 function removeFile(i){state.files.splice(i,1);render()}
 function resetDemo(){const i=state.images;state={...state,screen:'home',selectedCard:'aeternum',reviewFilter:'all',statuses:{},files:[{name:'Bradesco Aeternum Outubro 2026.pdf',size:'2,1 MB · 8 páginas',demo:true},{name:'Cartão anterior Outubro 2026.pdf',size:'1,8 MB · 6 páginas',demo:true}],smsMethod:'shortcut',smsFile:false,smsText:'',reportTab:'Resumo',cardTab:'Todos',extraTab:'Pessoas',repay:[500,300],modal:'',toast:'',images:i};render();toast('Demonstração reiniciada.')}
-function render(){const map={home, start,invoices,sms,processing,review,transaction,wallet,additional,report};document.getElementById('screen').innerHTML=map[state.screen]();const footer=['home','wallet','report','additional'].includes(state.screen)?[['home','Início','home'],['report','Auditorias','report'],['wallet','Cartões','cards'],['additional','Adicionais','users']].map(([k,n,ic])=>`<button class="${state.screen===k?'active':''}" onclick="go('${k}')">${ico(ic)}<span>${n}</span></button>`).join(''):'';document.getElementById('bottom').innerHTML=footer?`<nav class="bottom">${footer}</nav>`:'';document.getElementById('desk-nav').innerHTML=nav.map(([s,n,ic])=>`<button class="${state.screen===s?'active':''}" onclick="go('${s}')">${ico(ic,17)}${n}</button>`).join('');renderToast()}
+function render(){const map={home, start,invoices,sms,processing,review,transaction,wallet,additional,report};document.getElementById('screen').dataset.view=state.screen;document.getElementById('screen').innerHTML='<div class="view-content">'+map[state.screen]()+'</div>';const footer=[['home','Início','home'],['report','Auditorias','report'],['wallet','Cartões','cards'],['additional','Adicionais','users']].map(([k,n,ic])=>`<button class="${state.screen===k?'active':''}" onclick="go('${k}')">${ico(ic)}<span>${n}</span></button>`).join('');document.getElementById('bottom').innerHTML=footer?`<nav class="bottom" aria-label="Navegação principal">${footer}</nav>`:'';document.getElementById('desk-nav').innerHTML=nav.filter(([s])=>!['sms','processing','transaction'].includes(s)).map(([s,n,ic])=>`<button class="${state.screen===s?'active':''}" onclick="go('${s}')">${ico(ic,17)}${n}</button>`).join('');renderToast()}
 window.AuditaPrototype={state,ui:{esc,fmt,ico,header,sec,cardArt,lineButton},install(views){
  home=views.home;start=views.start;invoices=views.invoices;sms=views.sms;processing=views.processing;
  review=views.review;transaction=views.transaction;wallet=views.wallet;additional=views.additional;report=views.report;

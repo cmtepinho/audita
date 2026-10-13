@@ -1,7 +1,8 @@
-# Audita · 0.1.0
+# Audita · 0.2.0
 
 Auditoria mensal de faturas com **processamento e dados financeiros exclusivamente locais**.
-Design B 2.0 Claro Premium preservado.
+Interface web e mobile responsiva, com identidade B 2.0 Claro Premium.
+SMS está desativado nesta etapa e reservado para a segunda fase.
 
 [Abrir aplicativo](https://cmtepinho.github.io/audita/) ·
 [Código público](https://github.com/cmtepinho/audita) ·
@@ -11,7 +12,7 @@ Design B 2.0 Claro Premium preservado.
 
 1. Criar uma senha local com pelo menos 12 caracteres.
 2. Escolher a competência e importar fatura Bradesco no layout exportado suportado.
-3. Importar TXT/CSV de SMS ou prosseguir sem mensagens.
+3. Prosseguir diretamente para a análise das faturas.
 4. Processar e conferir subtotais, total, lançamentos e evidências.
 5. Revisar ocorrências e confirmar responsáveis e datas originais quando necessário.
 6. Exportar backup criptografado e relatório local.

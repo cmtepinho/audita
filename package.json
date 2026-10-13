@@ -1,6 +1,6 @@
 {
   "name": "audita",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "Audita — auditoria mensal de faturas com processamento e cofre locais",
   "type": "module",

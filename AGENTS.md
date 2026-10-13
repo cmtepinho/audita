@@ -12,6 +12,10 @@
 - Não publicar o histórico local original com autoria pessoal. Usar a cópia
   pública preparada com identidade cmtepinho/noreply. Todo arquivo público
   deve estar em `public-files.json` e ter conteúdo revisado.
+- Decisão do usuário (12/10/2026): entregar web ampla para notebook e mobile
+  responsivo, sem moldura de iPhone, ilha dinâmica, relógio ou barra de gesto
+  simulados. SMS está desativado na fase 1: sem importação, rota ou participação
+  nos cálculos. Preservar mensagens já cifradas para uma segunda etapa.
 - Preservar Design B 2.0 Claro Premium, as dez telas e os fluxos aprovados.
   Não reconstruir o frontend inteiro, remover recursos ou simplificar telas
   sem autorização do usuário. Evoluir em etapas verificáveis.

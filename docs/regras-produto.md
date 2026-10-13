@@ -1,3 +1,12 @@
+# Escopo vigente — 12/10/2026
+
+Por decisão do usuário, a aplicação tem interface web ampla e mobile responsiva,
+sem simulação de hardware de iPhone. A identidade Claro Premium é preservada.
+SMS foi adiado para a segunda etapa: importação e conciliação SMS desativadas;
+mensagens antigas permanecem cifradas no cofre e não participam dos resultados.
+Fluxo atual: competência → PDFs → processamento → revisão e relatório.
+As referências a SMS abaixo documentam a evolução futura, não o escopo ativo.
+
 # Regras do produto
 
 Fonte: brief recebido, preservado em `brief-original.md`. Regras abaixo orientam

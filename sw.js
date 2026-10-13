@@ -1,6 +1,6 @@
-const cacheName='audita-app-0.1.0';
+const cacheName='audita-app-0.2.0';
 // Somente arquivos estáticos do aplicativo. Nunca PDFs, SMS, backups ou relatórios.
-const urls=['./','./index.html','./assets/app.js','./assets/pdf.worker.mjs','./assets/icon.svg','./assets/icon-192.png','./assets/icon-512.png','./app.webmanifest'];
+const urls=['./','./index.html','./assets/app.js','./assets/app.css','./assets/pdf.worker.mjs','./assets/icon.svg','./assets/icon-192.png','./assets/icon-512.png','./app.webmanifest'];
 const approved=new Set(urls.map(url=>new URL(url,self.registration.scope).pathname));
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(cacheName).then(cache=>cache.addAll(urls)).then(()=>self.skipWaiting()));

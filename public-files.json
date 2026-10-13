@@ -28,6 +28,7 @@
   "scripts/check-reference.mjs",
   "scripts/dev-server.mjs",
   "scripts/prepare-public.mjs",
+  "src/app.css",
   "src/classification.js",
   "src/domain.ts",
   "src/main.js",

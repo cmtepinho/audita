@@ -9,6 +9,7 @@ const routes = new Map([
   ['/', new URL('index.html', root)],
   ['/index.html', new URL('index.html', root)],
   ['/reference/index.original.html', new URL('reference/index.original.html', root)]
+  ,['/assets/app.css',new URL('dist/assets/app.css',root)]
   ,['/assets/app.js',new URL('dist/assets/app.js',root)]
   ,['/assets/pdf.worker.mjs',new URL('dist/assets/pdf.worker.mjs',root)]
   ,['/assets/pdfjs-LICENSE',new URL('dist/assets/pdfjs-LICENSE',root)]
@@ -58,7 +59,7 @@ export function createDevServer() {
     }
     try {
       const html = await readFile(file);
-      const type=path.endsWith('.js')||path.endsWith('.mjs')?'text/javascript':path.endsWith('.svg')?'image/svg+xml':path.endsWith('.png')?'image/png':path.endsWith('.webmanifest')?'application/manifest+json':'text/html';
+      const type=path.endsWith('.css')?'text/css':path.endsWith('.js')||path.endsWith('.mjs')?'text/javascript':path.endsWith('.svg')?'image/svg+xml':path.endsWith('.png')?'image/png':path.endsWith('.webmanifest')?'application/manifest+json':'text/html';
       res.writeHead(200, { 'Content-Type': type+'; charset=utf-8' });
       res.end(req.method === 'HEAD' ? undefined : html);
     } catch {

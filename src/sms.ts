@@ -41,3 +41,6 @@ export function reconcile(entries:Entry[],messages:Message[]) {
     return [e.id,{status,message:status==='matched'?message:null,divergence:e.kind!=='installment'&&!uncertainYear&&found.length===0&&divergences.length===1?divergences[0]:null}];
   }));
 }
+
+// Fase 1: nenhuma mensagem antiga ou nova participa da auditoria ativa.
+export function reconcileInvoicesOnly(entries:Entry[]) { return reconcile(entries,[]); }

@@ -70,3 +70,21 @@ foi implementado nesta missão. O próximo incremento está definido em
 Node 20.20.2 foi o runtime local já disponível. A proposta comercial usa
 Node 24 LTS; esta etapa não alterou instalações globais nem adicionou dependências.
 
+
+## Correção web/mobile e suspensão de SMS — 12/10/2026
+
+- Shell de aplicativo sem moldura, ilha dinâmica, hora fictícia ou barra de gesto.
+- Navegador: dashboard em duas colunas no notebook; navegação inferior no celular;
+  verificações de largura de 320, 390, 768 e 1366 px sem overflow horizontal.
+- Ambiente isolado com PDF inteiramente sintético: cofre → competência → PDF →
+  processamento direto → relatório com sete lançamentos e total R$ 65,00.
+- Carteira, detalhe, reconhecimento, adicionais e diálogos verificados no celular.
+  Foco inicial, ciclo Tab e foco após salvar foram conferidos.
+- SMS indisponível em importação, navegação e cálculo, inclusive no relatório PDF.
+  Teste de regressão confirma que mensagens antigas são preservadas e ignoradas.
+- Agente independente revisou código e capturas, identificou o fallback SMS do
+  relatório e perda de foco após salvar; ambos corrigidos e revisão encerrada
+  sem bloqueadores para esta correção. Suite de 21 testes passou, incluindo
+  testes de domínio e caracterização histórica; esta última não testa o app atual.
+- Limites da evidência: navegador responsivo, sem teste em iPhone físico ou
+  VoiceOver. Validação da próxima fatura enviada pelo usuário permanece pendente.

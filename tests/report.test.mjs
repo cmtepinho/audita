@@ -13,3 +13,15 @@ test('relatório separa dimensões e escapa conteúdo de PDF sem executar HTML',
   const pending=renderReport({month:'2026-10',documents:[doc],cardSettings:{},repayments:[],messages:[]},{overlapping:true});
   assert.ok(pending.includes('A conferir'));
 });
+
+test('fase 1 ignora SMS preservados no cofre, inclusive no relatório exportado',()=>{
+  const doc={...parseBradesco(syntheticPages(),'synthetic'),name:'Documento sintético'};
+  const entry=doc.entries[5];entry.dateConfirmed=true;
+  const messages=[{id:'sms-antigo',last4:entry.cardLast4,date:entry.date,amountMinor:entry.amountMinor,text:'COMPRA SERVICO EXEMPLO'}];
+  const audit={month:'2026-10',documents:[doc],cardSettings:{},repayments:[],messages};
+  const html=renderReport(audit,{verified:true});
+  assert.ok(html.includes('0 correspondências confiáveis'));
+  assert.ok(html.includes('SMS desativado nesta etapa.'));
+  assert.ok(!html.includes('<td>Conciliada</td>'));
+  assert.equal(audit.messages.length,1);
+});

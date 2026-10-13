@@ -1,4 +1,13 @@
-# Audita 0.1.0 · versão funcional local
+# Escopo vigente — 12/10/2026
+
+Por decisão do usuário, a aplicação tem interface web ampla e mobile responsiva,
+sem simulação de hardware de iPhone. A identidade Claro Premium é preservada.
+SMS foi adiado para a segunda etapa: importação e conciliação SMS desativadas;
+mensagens antigas permanecem cifradas no cofre e não participam dos resultados.
+Fluxo atual: competência → PDFs → processamento → revisão e relatório.
+As referências a SMS abaixo documentam a evolução futura, não o escopo ativo.
+
+# Audita 0.2.0 · versão funcional local
 
 O protótipo passou a usar dados importados pelo usuário. A referência B 2.0
 permanece íntegra em `reference/`; identidade visual, navegação e as dez telas
@@ -19,11 +28,9 @@ TypeScript. Não há backend financeiro, conta em nuvem ou envio de documentos.
   Valores calculados e declarados são mantidos separados. Divergências ficam visíveis.
 - Mesmo PDF não é duplicado, inclusive quando selecionado em outra competência.
   Sobreposição entre arquivos diferentes bloqueia o total consolidado até revisão.
-- TXT/CSV ou texto colado de SMS: uma mensagem por linha, contendo COMPRA,
-  DD/MM/AAAA, final de cartão e R$. UTF-8 e fallback Windows-1252.
-- Conciliação por cartão/data/descritor/valor; um SMS não concilia duas compras
-  ambíguas. Valor integral compatível pode explicar parcela, após confirmar o ano.
-- Possível duplicidade, divergência de compra à vista, compra posterior ao
+- SMS desativado. O módulo de interpretação fica reservado para a segunda etapa.
+  Mensagens já cifradas no cofre são preservadas, sem participar dos resultados.
+- Possível duplicidade, compra posterior ao
   cancelamento informado e lançamento não reconhecido. Ausência de SMS não gera fraude.
 - Reconhecimento, resolução de ocorrências, categoria e data original separados.
   Histórico registra as decisões; reimportação preserva reconhecimento pelo ID do documento.
@@ -45,7 +52,7 @@ TypeScript. Não há backend financeiro, conta em nuvem ou envio de documentos.
 
 1. Abrir o aplicativo e criar uma senha local com pelo menos 12 caracteres.
 2. Criar auditoria e escolher o mês.
-3. Selecionar a fatura e, opcionalmente, importar SMS.
+3. Selecionar a fatura em PDF e seguir diretamente para o processamento.
 4. Processar, conferir documentos e revisar ocorrências.
 5. Confirmar modelo/responsável dos cartões e datas de compras antigas quando necessário.
 6. Exportar um backup criptografado. O mesmo backup pode ser transferido e
@@ -62,7 +69,7 @@ PDFs originais nem backups que o usuário salvou em suas pastas.
 - PDF digitalizado sem texto e PDF protegido por senha exigem outra cópia local;
   OCR e desbloqueio dentro do app ainda não estão disponíveis.
 - Limites: 25 MB/100 páginas por PDF, 100 mil elementos de texto por documento,
-  5 MB para SMS; até 500 linhas não interpretadas são retidas como evidência.
+  SMS indisponível nesta etapa.
 - A tabela exportada omite ano nas compras. O ano é inferido pelo vencimento e
   indicado nos detalhes/relatório; parcelas antigas exigem confirmação para conciliação.
 - Finais iguais em seções distintas geram pendência de identidade; não declarar
