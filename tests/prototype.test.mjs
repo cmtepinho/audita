@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import vm from 'node:vm';
 
-const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
+const html = await readFile(new URL('../reference/index.original.html', import.meta.url), 'utf8');
 const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
 
 // Caracterização do JavaScript existente; não substitui testes em navegador.
@@ -23,7 +23,7 @@ function prototype() {
   return { run: code => vm.runInContext(code, context), elements };
 }
 
-test('snapshot original permanece íntegro e frontend está inalterado nesta etapa', async () => {
+test('snapshot original permanece íntegro como referência das dez telas', async () => {
   const original = await readFile(new URL('../reference/index.original.html', import.meta.url));
   assert.equal(createHash('sha256').update(original).digest('hex'),
     '0f904d68bdfebcfdf474c74e0e794ca38932a8a243a48079008ddbfd44714328');

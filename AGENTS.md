@@ -2,6 +2,10 @@
 
 - Antes de alterar comportamento, ler `docs/regras-produto.md`,
   `docs/arquitetura.md` e `docs/plano-incremental.md`.
+- Estado e limites atuais: `docs/versao-funcional.md`. Persistência usa cofre cifrado;
+  nunca introduzir fallback silencioso com dados financeiros em texto puro.
+- Cache offline guarda somente recursos estáticos. Nunca adicionar PDFs, SMS,
+  backups, relatórios ou respostas com dados financeiros.
 - Requisito atualizado: dados financeiros exclusivamente locais, inclusive se o
   código/site estiver no GitHub/Pages. Ler `docs/privacidade-publicacao.md`.
   Backend financeiro e sincronização em nuvem não estão autorizados nesse modo.

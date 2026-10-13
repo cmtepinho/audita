@@ -1,5 +1,10 @@
 # Código público, dados locais
 
+Atualização 0.1.0: processamento local de PDFs/SMS, cofre cifrado em IndexedDB e
+backups criptografados foram implementados. Pages entrega somente `dist/`, com
+código, worker, ícones, manifesto e referência. Trechos sobre o protótipo abaixo
+descrevem a preparação inicial; o estado atual está em `versao-funcional.md`.
+
 Publicação autorizada em 12/10/2026: [repositório](https://github.com/cmtepinho/audita)
 e [protótipo no Pages](https://cmtepinho.github.io/audita/). Foi usado o histórico
 novo da cópia pública; o histórico original permaneceu local. O workflow de

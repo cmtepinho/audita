@@ -1,5 +1,10 @@
 # Arquitetura recomendada
 
+Implementação 0.1.0: domínio financeiro em TypeScript, interface B 2.0 preservada
+por uma camada de integração, esbuild, PDF.js/worker locais, IndexedDB cifrado e
+cache de código para uso offline. React/Vite são alternativas de evolução,
+não dependências desta entrega. Ver `versao-funcional.md`.
+
 Status: proposta para implementação incremental, não infraestrutura já instalada.
 Requisito posterior: dados financeiros exclusivamente locais, inclusive no Pages.
 Para esse modo, priorizar processamento no navegador e persistência local; API,

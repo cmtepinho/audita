@@ -24,16 +24,16 @@ jobs:
           node-version: 24
           package-manager-cache: false
       - run: npm run check:privacy -- --history
+      - run: npm ci
       - run: npm test
       - run: npm run check:reference
       - name: Preparar apenas os arquivos públicos do site
         run: |
-          mkdir -p site
-          cp index.html site/index.html
-          touch site/.nojekyll
+          test -f dist/index.html
+          test -f dist/assets/pdf.worker.mjs
       - uses: actions/upload-pages-artifact@v4
         with:
-          path: site
+          path: dist
   deploy:
     needs: build
     runs-on: ubuntu-latest

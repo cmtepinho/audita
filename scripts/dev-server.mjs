@@ -9,6 +9,14 @@ const routes = new Map([
   ['/', new URL('index.html', root)],
   ['/index.html', new URL('index.html', root)],
   ['/reference/index.original.html', new URL('reference/index.original.html', root)]
+  ,['/assets/app.js',new URL('dist/assets/app.js',root)]
+  ,['/assets/pdf.worker.mjs',new URL('dist/assets/pdf.worker.mjs',root)]
+  ,['/assets/pdfjs-LICENSE',new URL('dist/assets/pdfjs-LICENSE',root)]
+  ,['/assets/icon.svg',new URL('dist/assets/icon.svg',root)]
+  ,['/assets/icon-192.png',new URL('dist/assets/icon-192.png',root)]
+  ,['/assets/icon-512.png',new URL('dist/assets/icon-512.png',root)]
+  ,['/app.webmanifest',new URL('dist/app.webmanifest',root)]
+  ,['/sw.js',new URL('dist/sw.js',root)]
 ]);
 
 export function createDevServer() {
@@ -50,7 +58,8 @@ export function createDevServer() {
     }
     try {
       const html = await readFile(file);
-      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      const type=path.endsWith('.js')||path.endsWith('.mjs')?'text/javascript':path.endsWith('.svg')?'image/svg+xml':path.endsWith('.png')?'image/png':path.endsWith('.webmanifest')?'application/manifest+json':'text/html';
+      res.writeHead(200, { 'Content-Type': type+'; charset=utf-8' });
       res.end(req.method === 'HEAD' ? undefined : html);
     } catch {
       res.writeHead(500);
@@ -78,7 +87,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   server.listen(port, '127.0.0.1', () => {
     console.log(`Audita: http://127.0.0.1:${port}`);
     console.log(`Referência: http://127.0.0.1:${port}/reference/index.original.html`);
-    console.log('Protótipo demonstrativo. Apenas acesso local; sem recebimento de arquivos.');
+    console.log('Audita local. Apenas acesso neste computador; sem recebimento de arquivos.');
   });
   for (const signal of ['SIGINT', 'SIGTERM']) {
     process.on(signal, () => server.close());

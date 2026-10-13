@@ -1,109 +1,96 @@
-# Audita
+# Audita · 0.1.0
 
-Aplicativo de auditoria mensal de faturas de cartões de crédito.
-Design aprovado: **B 2.0 · Claro Premium**.
+Auditoria mensal de faturas com **processamento e dados financeiros exclusivamente locais**.
+Design B 2.0 Claro Premium preservado.
 
-Código público: [cmtepinho/audita](https://github.com/cmtepinho/audita).
-Protótipo publicado: [Audita no GitHub Pages](https://cmtepinho.github.io/audita/).
-Faturas, SMS e dados financeiros permanecem exclusivamente locais.
+[Abrir aplicativo](https://cmtepinho.github.io/audita/) ·
+[Código público](https://github.com/cmtepinho/audita) ·
+[Referência do protótipo](https://cmtepinho.github.io/audita/reference/index.original.html)
 
-## Estado atual
+## Utilizar
 
-Primeira missão de análise e preparação, em 12/10/2026.
-O `index.html` original permanece intacto. As dez telas são navegáveis,
-mas a extração de faturas, a conciliação e a auditoria ainda são simuladas.
-Não há backend, banco de dados, autenticação nem persistência.
+1. Criar uma senha local com pelo menos 12 caracteres.
+2. Escolher a competência e importar fatura Bradesco no layout exportado suportado.
+3. Importar TXT/CSV de SMS ou prosseguir sem mensagens.
+4. Processar e conferir subtotais, total, lançamentos e evidências.
+5. Revisar ocorrências e confirmar responsáveis e datas originais quando necessário.
+6. Exportar backup criptografado e relatório local.
 
-## Visualização local
+Dados são cifrados no navegador com AES-GCM. Senha/chave não são salvas nem enviadas.
+Não há recuperação por servidor nem sincronização automática. Guardar senha e backups.
+PDFs são lidos em memória e não entram no cache offline. O backup pode ser restaurado
+manualmente em outro dispositivo, usando a mesma senha.
 
-Com Node.js e npm disponíveis:
+O aplicativo importa documentos e calcula resultados reais. A demonstração fictícia
+continua separada na referência original. Nenhuma fatura de usuário é distribuída junto
+com o aplicativo ou versionada neste repositório.
+
+## Cobertura e limites
+
+Suporta o layout Bradesco exportado com texto, tabela de lançamentos e Resumo das Despesas.
+Outro layout, PDF digitalizado ou protegido por senha é sinalizado. Valores faturados são
+BRL; valores originais em moeda estrangeira não são somados como despesas adicionais.
+A conciliação não comprova autorização.
+
+Ano de compra ausente no PDF é inferido pelo vencimento e indicado no detalhe. Parcelas
+antigas exigem confirmação de data para conciliação confiável. Atalhos do iPhone e OCR
+ainda não estão disponíveis. Não há contestação automática ou verificação externa de empresas.
+
+[Funcionalidades, limites e validação](docs/versao-funcional.md).
+
+## Desenvolvimento local
+
+Usar Node 24 LTS para instalação/build e validação das dependências.
 
 ```sh
+npm ci
 npm run dev
 ```
 
-Abrir [Audita local](http://127.0.0.1:5173).
-A [referência original](http://127.0.0.1:5173/reference/index.original.html)
-permite comparar futuras mudanças.
-Para encerrar, usar `Ctrl+C`. Se a porta estiver ocupada:
+Abrir [ambiente local](http://127.0.0.1:5173). Para outra porta:
 
 ```sh
 AUDITA_PORT=5174 npm run dev
 ```
 
-Esta preparação não instala dependências. O servidor usa apenas a biblioteca
-padrão do Node, escuta em `127.0.0.1` e serve somente o protótipo e a referência.
-Não recebe uploads nem expõe arquivos, documentos ou a pasta Git.
-O navegador ainda solicita as imagens institucionais ao domínio
-`assets.bradesco`, como previsto no HTML recebido. Nenhum documento é enviado
-por esse fluxo. As imagens podem ficar indisponíveis sem conexão.
-
-Ambiente encontrado e usado nesta etapa: Node 20.20.2 e npm local.
-Para a implementação comercial, adotar Node 24 LTS, com versões fixadas no
-projeto. Node 20 já está fora de suporte segundo a
-[tabela oficial de versões](https://nodejs.org/en/about/previous-releases).
-
-## Verificações
+O servidor escuta somente em 127.0.0.1, entrega arquivos explicitamente permitidos e
+não recebe uploads. Não expõe Git, documentos ou configuração. Não há registro de
+service worker no desenvolvimento local, para evitar código antigo.
 
 ```sh
 npm test
 npm run check:reference
+npm run check:privacy
 ```
 
-Os testes caracterizam o JavaScript do protótipo e verificam o servidor local.
-Não comprovam extração de PDF, precisão financeira, acessibilidade ou compatibilidade
-em iPhone. O teste que compara o frontend à referência é específico desta etapa;
-na primeira alteração autorizada do frontend, substituí-lo por comparação visual
-e manter a verificação do SHA-256 da referência.
+O build em dist/ inclui apenas HTML, código empacotado, worker PDF.js, ícones,
+manifesto, service worker e referência. dist/ e .build/ são gerados e ignorados.
+O workflow instala dependências fixadas, executa verificações e publica somente dist/.
+
+## Publicação e privacidade
+
+Arquivos reais ficam em private/, fora do Git. public-files.json declara os únicos
+arquivos permitidos. Hooks verificam conteúdo e histórico antes de envio. Ícones PNG
+gerados do desenho do app têm hashes revisados; imagens pessoais não podem substituí-los
+inadvertidamente. As verificações não dispensam revisão de conteúdo.
+
+O histórico local original tem autoria privada e **não deve ser enviado**. A cópia pública
+em .publish/audita usa identidade cmtepinho/noreply. Atualizações são transferidas pela
+lista aprovada, sem copiar .git ou documentos. npm run prepare:public cria a cópia inicial
+e não sobrescreve uma existente.
+
+Artes dos cartões ainda vêm do Bradesco: imagens públicas, sem dados de fatura na requisição.
+Dependências JavaScript são empacotadas localmente, sem CDN.
 
 ## Documentação
 
-- [Código público e dados locais](docs/privacidade-publicacao.md): requisito atualizado,
-  verificações, cópia sem histórico pessoal e publicação limitada no Pages.
-- [Análise integral do protótipo](docs/analise-prototipo.md): telas, interações e limitações.
-- [Regras do produto](docs/regras-produto.md): invariantes financeiros e de auditoria.
-- [Arquitetura proposta](docs/arquitetura.md): módulos, dados, segurança e migração.
-- [Plano incremental](docs/plano-incremental.md): ordem, dependências e critérios de entrega.
-- [Registro de validação](docs/validacao.md): evidências e limites desta primeira missão.
-- [Brief original](docs/brief-original.md): instruções recebidas, sem alterações.
-- [Referência preservada](reference/README.md): hash e recuperação pelo Git.
+- [Versão funcional](docs/versao-funcional.md).
+- [Regras financeiras](docs/regras-produto.md).
+- [Código público e dados locais](docs/privacidade-publicacao.md).
+- [Arquitetura](docs/arquitetura.md).
+- [Plano de desenvolvimento](docs/plano-incremental.md).
+- [Análise histórica do protótipo](docs/analise-prototipo.md).
+- [Referência preservada](reference/README.md).
 
-## Documentos financeiros
-
-Manter documentos reais exclusivamente em `private/`, fora do versionamento.
-O `.gitignore` também exclui PDFs, CSVs, planilhas, bancos locais e segredos.
-Isso evita inclusão acidental comum, mas não substitui revisar `git diff --cached`
-antes de cada commit. TXT de SMS deve ficar em `private/`, pois nem todo TXT é
-financeiro e a extensão não é bloqueada globalmente.
-
-Não enviar documentos financeiros para serviços externos sem autorização
-explícita. Os testes futuros devem usar fixtures sintéticas ou sanitizadas,
-revisadas antes de qualquer inclusão no repositório.
-
-Requisito atual: dados financeiros permanecem exclusivamente locais mesmo com
-o aplicativo no GitHub Pages. O plano com backend é uma alternativa futura,
-condicionada a uma mudança expressa desse requisito. A publicação contém somente
-o protótipo fictício; processamento e persistência reais ainda serão implementados.
-
-```sh
-npm run check:privacy
-npm run prepare:public
-```
-
-O primeiro comando verifica o índice Git; o segundo cria uma cópia aprovada para
-publicação em `.publish/audita`, com autoria pública e sem histórico pessoal.
-Nenhum desses comandos envia arquivos ao GitHub.
-
-A cópia pública inicial foi preparada e enviada a `cmtepinho/audita` em 12/10/2026.
-Seu checkout está em `.publish/audita`. O projeto original mantém o histórico
-local e não tem remoto público configurado. Atualizações devem transferir apenas
-arquivos aprovados para esse checkout e gerar commits com identidade noreply;
-nunca enviar o histórico original ou copiar diretórios de dados privados.
-
-## Próxima etapa
-
-Implementar um adaptador local para **um layout conhecido de fatura Bradesco**:
-extrair lançamentos com referência de página e conferir totais. Ampliar para
-vários PDFs e SMS após validar essa base. O parser ainda não foi implementado;
-não foi fornecida uma fatura nesta primeira missão.
-
+O original está preservado pela tag prototype-b2.0-original e SHA-256.
+Não editar a referência ao evoluir o aplicativo.

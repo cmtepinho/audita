@@ -20,13 +20,16 @@ test('servidor local entrega HTML intacto e recusa acesso a documentos e escrita
     req.end();
   });
   const original = await readFile(new URL('../index.html', import.meta.url), 'utf8');
-  for (const path of ['/', '/index.html', '/reference/index.original.html']) {
+  for (const path of ['/', '/index.html']) {
     const res = await call(path);
     assert.equal(res.status, 200);
     assert.equal(res.body, original);
     assert.equal(res.headers['cache-control'], 'no-store');
     assert.equal(res.headers['referrer-policy'], 'no-referrer');
   }
+  assert.equal((await call('/reference/index.original.html')).body,await readFile(new URL('../reference/index.original.html',import.meta.url),'utf8'));
+  assert.equal((await call('/assets/app.js')).status,200);
+  assert.match((await call('/assets/app.js')).headers['content-type'],/javascript/);
   for (const path of ['/.git/config', '/private/fatura.pdf', '/docs/brief-original.md', '/package.json', '/../index.html', '/%2e%2e/index.html']) {
     assert.equal((await call(path)).status, 404, path);
   }

@@ -27,3 +27,5 @@ data/
 *.zip
 *.bak
 *.bundle
+dist/
+.build/
